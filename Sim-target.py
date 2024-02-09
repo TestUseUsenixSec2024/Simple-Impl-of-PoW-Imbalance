@@ -2,19 +2,20 @@ import hashlib
 import random
 import string
 
-total_hashrate = 100
+total_hashrate = 10
 diff = 5
 data_rand = "".join(random.sample("abcdefghijklmnopqrstuvwxyz!@#$%^&*()123456789", 20))
-time = 10
+time = 100
+
 
 class Node:
     def __init__(self, name, hashrate_ratio):
         self.name = name
         self.flag = False
         self.nouce = random.randint(0, 10000000)
-        self.hashrate_ratio = hashrate_ratio  
-        self.hashrate = int(total_hashrate * hashrate_ratio)  
-        self.blocks_mined = 0  
+        self.hashrate_ratio = hashrate_ratio
+        self.hashrate = int(total_hashrate * hashrate_ratio)
+        self.blocks_mined = 0
 
     def mine_block(self, difficulty):
         for _ in range(self.hashrate):
@@ -23,9 +24,9 @@ class Node:
             hash_attempt = hashlib.sha256(data.encode()).hexdigest()
             if hash_attempt[:difficulty] == "0" * difficulty:
                 self.blocks_mined += 1
-                # print(f"{self.name} mined a block: {hash_attempt}")
                 self.flag = True
                 break
+
 
 result = [0] * 4
 
@@ -33,9 +34,8 @@ for k in range(time):
     print(f"Round {k}")
 
     node = [Node] * 4
-    node[0] = Node("Node " + str(0), 0.5)
-    for i in range(1, 2):
-        node[i] = Node("Node " + str(i + 1), 0.25 * (i + 1))
+    for i in range(4):
+        node[i] = Node("Node " + str(i + 1), 0.1 * (i + 1))
 
     for i in range(100):
         win_flag = False
@@ -55,7 +55,5 @@ for k in range(time):
     for i in range(4):
         result[i] = result[i] + node[i].blocks_mined
 
-
 for i in range(4):
     print(f"{node[i].name} have {node[i].hashrate} and mined {(result[i]/time)} blocks")
-

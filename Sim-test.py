@@ -3,7 +3,7 @@ import random
 import string
 
 total_hashrate = 10
-diff = 2
+diff = 5
 data_rand = "".join(random.sample("abcdefghijklmnopqrstuvwxyz!@#$%^&*()123456789", 20))
 time = 100
 
